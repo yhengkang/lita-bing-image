@@ -1,23 +1,25 @@
 module Lita
   module Handlers
     class BingImage < Handler
+      attr_accessor :connection
+
       URL = "https://api.datamarket.azure.com/Bing/Search/Image"
 
       route(/(?:image|img)(?:\s+me)? (.+)/i, :fetch, command: true, help: {
         "image QUERY" => "Find images from Bing."
       })
 
-      def self.connection
-        return @@connection if @@connection
+      def connection
+        return @connection if @connection
         connection = Faraday::Connection.new
         connection.basic_auth(ENV["MS_ACCOUNT_KEY"], ENV["MS_ACCOUNT_KEY"])
-        @@connection = connection
+        @connection = connection
       end
 
       def fetch(response)
         query = response.matches[0][0]
 
-        http_response = self.class.connection.get(
+        http_response = connection.get(
           URL,
           "Query" => "'#{query}'",
           "Adult" => "'#{safe_value}'",
