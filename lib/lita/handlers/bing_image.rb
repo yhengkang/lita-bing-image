@@ -17,7 +17,7 @@ module Lita
       def fetch(response)
         query = response.matches[0][0]
 
-        http_response = self.connection.get(
+        http_response = self.class.connection.get(
           URL,
           "Query" => "'#{query}'",
           "Adult" => "'#{safe_value}'",
