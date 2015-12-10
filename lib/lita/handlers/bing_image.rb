@@ -54,7 +54,7 @@ module Lita
         if http_response.status == 200
           data = MultiJson.load(http_response.body)
           all_results = data["d"]["results"]
-          gif_results = data["d"]["results"].select{|r| r["ContentType"].in?(["image/animatedgif", "image/gif"])}
+          gif_results = data["d"]["results"].select{|r| ["image/animatedgif", "image/gif"].include?(r["ContentType"])}
 
           choice = if (gif_results.length > 0) 
             gif_results.sample
