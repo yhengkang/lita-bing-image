@@ -44,6 +44,6 @@ module Lita
       end
     end
 
-    Lita.register_handler(self)
+    Lita.register_handler(BingImage)
   end
 end
