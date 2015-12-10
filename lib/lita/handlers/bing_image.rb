@@ -22,7 +22,7 @@ module Lita
         http_response = connection.get(
           URL,
           "Query" => "'#{query}'",
-          "Adult" => "'#{safe_value}'",
+          "Adult" => "'moderate'",
           "$format" => "json"
         )
 
@@ -35,14 +35,6 @@ module Lita
             "Couldn't get image, returned with status: #{http_response.status}"
           )
         end
-      end
-
-      private
-
-      def safe_value
-        safe = Lita.config.handlers.bing_image.safe_search.to_s.downcase
-        safe = "moderate" unless ["strict", "moderate", "off"].include?(safe)
-        safe
       end
     end
 
